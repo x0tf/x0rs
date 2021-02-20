@@ -45,7 +45,7 @@ fn test_user_agent() {
         .await;
 
         let client = Client::new(&server_uri).unwrap();
-        client.info().await.ok();
+        client.info().await.unwrap_err();
         // this just sends a request to the info endpoint,
         // what really matters though is that a request with the correct User-Agent
         // is sent, so the request result is discarded

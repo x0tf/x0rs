@@ -19,8 +19,7 @@ impl<'a> Client<'a> {
         let req = Request::builder()
             .method("GET")
             .uri(&format!("{}/v1/info", self.base_uri))
-            .body(())
-            .unwrap(); // TODO: remove this unwrap?;
+            .body(())?; // TODO: remove this unwrap?;
         let info = self.http_client.send(req).await?;
         Ok(info)
     }

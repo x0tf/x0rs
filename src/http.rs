@@ -33,7 +33,7 @@ impl HttpClient {
                 let body_deserialized = response.json().await?;
                 Ok(body_deserialized)
             }
-            _ => Err(ClientError::UnexpectedStatus),
+            status => Err(ClientError::UnexpectedStatus(status)),
         }
     }
 }

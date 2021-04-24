@@ -1,9 +1,8 @@
 use crate::{
     error::ClientResult,
     http::HttpClient,
-    model::{info::Info, namespace::NamespaceHandler},
+    model::{info::InfoHandler, namespace::NamespaceHandler},
 };
-use http::Request;
 
 pub struct Client {
     pub base_uri: String,
@@ -19,13 +18,8 @@ impl Client {
         Ok(client)
     }
 
-    pub async fn info(&self) -> ClientResult<Info> {
-        let req = Request::builder()
-            .method("GET")
-            .uri(&format!("{}/v1/info", self.base_uri))
-            .body(())?;
-        let info = self.http_client.send(req).await?;
-        Ok(info)
+    pub fn info(&self) -> InfoHandler {
+        InfoHandler::new(self)
     }
 
     pub fn namespace(&self, id: &str, token: &str) -> NamespaceHandler {

@@ -22,7 +22,7 @@ impl Client {
         InfoHandler::new(self)
     }
 
-    pub fn namespace(&self, id: &str, token: &str) -> NamespaceHandler {
-        NamespaceHandler::new(id, token, self)
+    pub fn namespace(&self, id: &str) -> NamespaceHandler {
+        NamespaceHandler::new(id, self)
     }
 }

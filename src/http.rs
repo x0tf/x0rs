@@ -1,5 +1,5 @@
 use crate::error::{ClientError, ClientResult};
-use http::{Request, StatusCode};
+use http::Request;
 use isahc::{AsyncReadResponseExt, HttpClient as IsahcClient};
 use serde::{de::DeserializeOwned, Serialize};
 
@@ -29,7 +29,7 @@ impl HttpClient {
 
         let mut response = self.internal.send_async(request_serialized).await?;
         match response.status() {
-            StatusCode::OK => {
+            status if status.is_success() => {
                 let body_deserialized = response.json().await?;
                 Ok(body_deserialized)
             }

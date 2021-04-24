@@ -15,8 +15,7 @@ pub struct Settings {
     pub namespace_id_rules: NamespaceIdRules,
 }
 
-#[derive(Debug, Deserialize)]
-#[cfg_attr(test, derive(PartialEq, Serialize))]
+#[derive(Debug, Deserialize, PartialEq, Serialize)]
 pub struct Info {
     pub version: String,
     pub production: bool,
@@ -65,10 +64,12 @@ mod test {
         };
 
         let server = MockServer::start_async().await;
-        let mock = server.mock(|when, then| {
-            when.method("GET").path("/v2/info");
-            then.status(200).json_body_obj(&info_expected);
-        });
+        let mock = server
+            .mock_async(|when, then| {
+                when.method("GET").path("/v2/info");
+                then.status(200).json_body_obj(&info_expected);
+            })
+            .await;
 
         let client = Client::new(&server.base_url()).unwrap();
         let info = client.info().get().await.unwrap();

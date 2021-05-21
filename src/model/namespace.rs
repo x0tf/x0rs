@@ -59,7 +59,7 @@ impl<'a> NamespaceHandler<'a> {
         Ok(self)
     }
 
-    pub fn token<'b>(mut self, token: &'b str) -> NamespaceHandler<'a> {
+    pub fn token(mut self, token: &str) -> NamespaceHandler<'a> {
         self.token = token.to_string();
         self
     }
